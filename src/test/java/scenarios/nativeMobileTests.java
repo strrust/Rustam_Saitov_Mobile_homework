@@ -2,10 +2,12 @@ package scenarios;
 
 import data.EpamAppData;
 import data.TestDataProvider;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 import setup.BaseTest;
 
-import static constants.reflectionWebElements.*;
+import static constants.PlatformConstants.*;
+import static constants.ReflectionWebElements.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static utils.PropertiesLoader.getProperty;
@@ -20,12 +22,22 @@ public class nativeMobileTests extends BaseTest {
         po.getElement(REG_NAME_TEXT).sendKeys(data.getUsername());
         po.getElement(REG_PWD_TEXT).sendKeys(data.getPwd());
         po.getElement(REG_CONFIRM_PWD_TEXT).sendKeys(data.getPwd());
-        getDriver().hideKeyboard();
+        if (platform.equals(IOS)) {
+            getDriver().getKeyboard().sendKeys(Keys.RETURN);
+        }
+        else {
+            getDriver().hideKeyboard();
+        }
         po.getElement(REG_CREATE_NEW_ACC_BUTTON).click();
         po.getElement(LOGIN_TEXT).sendKeys(data.getEmail());
         po.getElement(PWD_TEXT).sendKeys(data.getPwd());
         po.getElement(SIGN_IN_BUTTON).click();
-        assertThat(po.getElement(BUDGET_ACTIVITY_TITLE).getText(), equalTo(getProperty("testRegBudgetText")));
+        if (platform.equals(IOS)) {
+            assertThat(po.getElement(BUDGET_ACTIVITY_TITLE).getText(), equalTo(getProperty("testRegIOSBudgetText")));
+        }
+        else {
+            assertThat(po.getElement(BUDGET_ACTIVITY_TITLE).getText(), equalTo(getProperty("testRegAndroidBudgetText")));
+        }
     }
 
 }
