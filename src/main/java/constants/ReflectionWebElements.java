@@ -1,6 +1,6 @@
 package constants;
 
-public class reflectionWebElements {
+public class ReflectionWebElements {
     public static final String REGISTER_BUTTON = "regBtn";
     public static final String REG_EMAIL_TEXT = "regEmailEditText";
     public static final String REG_NAME_TEXT = "regUsernameEditText";

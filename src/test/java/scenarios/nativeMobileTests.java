@@ -5,7 +5,7 @@ import data.TestDataProvider;
 import org.testng.annotations.Test;
 import setup.BaseTest;
 
-import static constants.reflectionWebElements.*;
+import static constants.ReflectionWebElements.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static utils.PropertiesLoader.getProperty;
