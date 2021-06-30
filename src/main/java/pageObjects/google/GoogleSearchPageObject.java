@@ -5,13 +5,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
+public class GoogleSearchPageObject {
+    @FindBy(css = "input[type='Search']")
+    WebElement searchBar;
 
-public class GoogleResultsPage {
-    @FindBy(css = "#rso > div")
-    List<WebElement> searchResultsContent;
-
-    public GoogleResultsPage(AppiumDriver appiumDriver) {
+    public GoogleSearchPageObject(AppiumDriver appiumDriver) {
         PageFactory.initElements(appiumDriver, this);
     }
 }

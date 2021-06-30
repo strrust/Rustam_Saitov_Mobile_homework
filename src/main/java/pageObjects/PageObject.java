@@ -5,8 +5,8 @@ import org.openqa.selenium.WebElement;
 import pageObjects.epamApp.BudgetPageObject;
 import pageObjects.epamApp.LoginPageObject;
 import pageObjects.epamApp.RegPageObject;
-import pageObjects.google.GoogleResultsPage;
-import pageObjects.google.GoogleSearchPage;
+import pageObjects.google.GoogleResultsPageObject;
+import pageObjects.google.GoogleSearchPageObject;
 import setup.IPageObject;
 
 import java.lang.reflect.Field;
@@ -23,10 +23,10 @@ public class PageObject implements IPageObject {
             case "web":
                 switch (pageType) {
                     case SEARCH_PO:
-                        somePageObject = new GoogleSearchPage(appiumDriver);
+                        somePageObject = new GoogleSearchPageObject(appiumDriver);
                         break;
                     case RESULTS_PO:
-                        somePageObject = new GoogleResultsPage(appiumDriver);
+                        somePageObject = new GoogleResultsPageObject(appiumDriver);
                         break;
                     default:
                         break;
