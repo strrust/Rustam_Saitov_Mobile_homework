@@ -8,12 +8,16 @@ import pageObjects.PageObject;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static constants.PageObjectsConstants.*;
 
 public class BaseTest implements IDriver {
 
     private static AppiumDriver appiumDriver; // singleton
-    protected static IPageObject po;
+    protected static Map<String, IPageObject> pageObjects;
     protected static final String GOOGLE_URL = "https://www.google.com/";
     protected static String platform;
 
@@ -33,8 +37,21 @@ public class BaseTest implements IDriver {
                       @Optional("") String bundleId
     ) throws Exception {
         System.out.println("Before: app type - " + appType);
+        pageObjects = new HashMap<String, IPageObject>();
         setAppiumDriver(platformName, deviceName, udid, browserName, app, appPackage, appActivity, bundleId);
-        setPageObject(appType, appiumDriver);
+        switch (appType) {
+            case "web":
+                setPageObject(appType, SEARCH_PO, appiumDriver);
+                setPageObject(appType, RESULTS_PO, appiumDriver);
+                break;
+            case "native":
+                setPageObject(appType, LOGIN_PO, appiumDriver);
+                setPageObject(appType, REG_PO, appiumDriver);
+                setPageObject(appType, BUDGET_PO, appiumDriver);
+                break;
+            default:
+                break;
+        }
     }
 
     @AfterSuite(alwaysRun = true)
@@ -73,8 +90,8 @@ public class BaseTest implements IDriver {
         platform = platformName;
     }
 
-    private void setPageObject(String appType, AppiumDriver appiumDriver) throws Exception {
-        po = new PageObject(appType, appiumDriver);
+    private void setPageObject(String appType, String pageType, AppiumDriver appiumDriver) throws Exception {
+        pageObjects.put(pageType, new PageObject(appType, pageType, appiumDriver));
     }
 
 

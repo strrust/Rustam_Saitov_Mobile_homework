@@ -2,27 +2,55 @@ package pageObjects;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import pageObjects.epamApp.BudgetPageObject;
+import pageObjects.epamApp.LoginPageObject;
+import pageObjects.epamApp.RegPageObject;
+import pageObjects.google.GoogleResultsPage;
+import pageObjects.google.GoogleSearchPage;
 import setup.IPageObject;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
+import static constants.PageObjectsConstants.*;
+
 public class PageObject implements IPageObject {
 
     Object somePageObject; // it should be set of web page or EPAM Test App WebElements
 
-    public PageObject(String appType, AppiumDriver appiumDriver) throws Exception {
-        System.out.println("Current app type: " + appType);
+    public PageObject(String appType, String pageType, AppiumDriver appiumDriver) throws Exception {
         switch (appType) {
             case "web":
-                somePageObject = new WebPageObject(appiumDriver);
+                switch (pageType) {
+                    case SEARCH_PO:
+                        somePageObject = new GoogleSearchPage(appiumDriver);
+                        break;
+                    case RESULTS_PO:
+                        somePageObject = new GoogleResultsPage(appiumDriver);
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case "native":
-                somePageObject = new NativePageObject(appiumDriver);
+                switch (pageType) {
+                    case LOGIN_PO:
+                        somePageObject = new LoginPageObject(appiumDriver);
+                        break;
+                    case REG_PO:
+                        somePageObject = new RegPageObject(appiumDriver);
+                        break;
+                    case BUDGET_PO:
+                        somePageObject = new BudgetPageObject(appiumDriver);
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
-                throw new Exception("Can't create a page object for " + appType);
+                throw new Exception("Can't create a " + pageType + "page object for " + appType);
         }
+
     }
 
     @Override

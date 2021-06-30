@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import setup.BaseTest;
 
+import static constants.PageObjectsConstants.*;
 import static constants.PlatformConstants.*;
 import static constants.ReflectionWebElements.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,16 +20,16 @@ public class webMobileTests extends BaseTest {
             dataProvider = "googleSearchData", dataProviderClass = TestDataProvider.class)
     public void googleSearchTest(GoogleSearchData data) throws NoSuchFieldException, IllegalAccessException, InterruptedException {
         getDriver().get(GOOGLE_URL);
-        po.getElement(SEARCH_BAR).sendKeys(data.getSearchText() + Keys.ENTER);
+        pageObjects.get(SEARCH_PO).getElement(SEARCH_BAR).sendKeys(data.getSearchText() + Keys.ENTER);
 
         if (platform.equals(IOS)) {
-            po.getElement(SEARCH_BAR).submit();
+            pageObjects.get(SEARCH_PO).getElement(SEARCH_BAR).submit();
         }
 
         new WebDriverWait(getDriver(), 10).until(
                 wd -> ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete")
         );
-        assertThat(po.getElements(CONTENT_LIST).size(), not(equalTo(0)));
+        assertThat(pageObjects.get(RESULTS_PO).getElements(CONTENT_LIST).size(), not(equalTo(0)));
     }
 
 }
