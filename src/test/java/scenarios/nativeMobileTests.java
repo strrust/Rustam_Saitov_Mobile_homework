@@ -2,10 +2,12 @@ package scenarios;
 
 import data.EpamAppData;
 import data.TestDataProvider;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 import setup.BaseTest;
 
 import static constants.PageObjectsConstants.*;
+import static constants.PlatformConstants.*;
 import static constants.ReflectionWebElements.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -21,13 +23,24 @@ public class nativeMobileTests extends BaseTest {
         pageObjects.get(REG_PO).getElement(REG_NAME_TEXT).sendKeys(data.getUsername());
         pageObjects.get(REG_PO).getElement(REG_PWD_TEXT).sendKeys(data.getPwd());
         pageObjects.get(REG_PO).getElement(REG_CONFIRM_PWD_TEXT).sendKeys(data.getPwd());
-        getDriver().hideKeyboard();
+        if (platform.equals(IOS)) {
+            getDriver().getKeyboard().sendKeys(Keys.RETURN);
+        }
+        else {
+            getDriver().hideKeyboard();
+        }
         pageObjects.get(REG_PO).getElement(REG_CREATE_NEW_ACC_BUTTON).click();
         pageObjects.get(LOGIN_PO).getElement(LOGIN_TEXT).sendKeys(data.getEmail());
         pageObjects.get(LOGIN_PO).getElement(PWD_TEXT).sendKeys(data.getPwd());
         pageObjects.get(LOGIN_PO).getElement(SIGN_IN_BUTTON).click();
-        assertThat(pageObjects.get(BUDGET_PO).getElement(BUDGET_ACTIVITY_TITLE).getText(),
-                equalTo(getProperty("testRegBudgetText")));
+        if (platform.equals(IOS)) {
+            assertThat(pageObjects.get(BUDGET_PO).getElement(BUDGET_ACTIVITY_TITLE).getText(),
+                    equalTo(getProperty("testRegIOSBudgetText")));
+        }
+        else {
+            assertThat(pageObjects.get(BUDGET_PO).getElement(BUDGET_ACTIVITY_TITLE).getText(),
+                    equalTo(getProperty("testRegAndroidBudgetText")));
+        }
     }
 
 }

@@ -11,7 +11,7 @@ public class TestDataProvider {
     @DataProvider
     public Object[][] googleSearchData() {
         GoogleSearchData data = new GoogleSearchData();
-        data.setSearchText(getProperty("testGoogleSearchText") + "\n");
+        data.setSearchText(getProperty("testGoogleSearchText"));
         return new Object[][]{
                 {data}
         };
