@@ -36,3 +36,4 @@ public class RegPageObject {
         PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
     }
 }
+

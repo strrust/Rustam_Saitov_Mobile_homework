@@ -18,3 +18,4 @@ public class BudgetPageObject {
         PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
     }
 }
+

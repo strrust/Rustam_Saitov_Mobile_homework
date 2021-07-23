@@ -25,7 +25,6 @@ public class webMobileTests extends BaseTest {
         if (platform.equals(IOS)) {
             pageObjects.get(SEARCH_PO).getElement(SEARCH_BAR).submit();
         }
-
         new WebDriverWait(getDriver(), 10).until(
                 wd -> ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete")
         );
